@@ -1,0 +1,248 @@
+/* General Styling */
+.movie-details-page {
+  color: #fff;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  padding: 0 20px;
+  margin: 0;
+}
+
+/* Movie Banner */
+.movie-banner {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  color: white;
+  position: relative;
+  border-radius: 10px;
+}
+
+.movie-info {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+}
+
+.movie-info h1 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #ffeb3b;
+}
+
+.movie-info p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+/* Movie Details Section */
+.movie-details-table {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.movie-details-table table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  color: #ddd;
+}
+
+.movie-details-table td,
+.movie-details-table th {
+  padding: 15px;
+  text-align: left;
+  border: 1px solid #444;
+}
+
+.movie-details-table th {
+  background: #333;
+  color: #ffeb3b;
+  text-transform: uppercase;
+}
+
+.movie-details-table td {
+  background: #1c1c1c;
+}
+
+/* Cast and Crew Sections */
+.cast-section,
+.crew-section {
+  padding: 20px;
+}
+
+.cast-container,
+.crew-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.cast-card,
+.crew-card {
+  background: #1e1e1e;
+  width: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cast-card:hover,
+.crew-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+.cast-card img,
+.crew-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.cast-card p,
+.crew-card p {
+  margin: 5px 0;
+  color: #ccc;
+}
+
+.cast-card .character,
+.crew-card .job {
+  font-size: 0.9em;
+  color: #ffab40;
+}
+
+/* Action Buttons (Heart and Plus) */
+.favorite-button,
+.watchlist-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5em;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favorite-button.active {
+  color: #ff0000;
+}
+
+.favorite-button:hover,
+.watchlist-button:hover {
+  transform: scale(1.2);
+}
+
+.watchlist-button {
+  color: #76ff03;
+}
+
+.watchlist-button.active {
+  color: #64dd17;
+}
+
+/* Button Text below Icons */
+.favorite-button .button-text,
+.watchlist-button .button-text {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 5px;  /* Ensures the text is below the icon */
+  visibility: visible; /* Text is always visible */
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Star Rating */
+.star-rating {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.star-rating svg {
+  font-size: 1.5em;
+  margin-right: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .movie-banner {
+    height: 300px;
+  }
+
+  .movie-info h1 {
+    font-size: 2em;
+  }
+
+  .movie-details-table table {
+    font-size: 0.9em;
+  }
+
+  .cast-card,
+  .crew-card {
+    width: 120px;
+  }
+
+  .cast-card img,
+  .crew-card img {
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cast-card,
+  .crew-card {
+    width: 100px;
+  }
+
+  .cast-card img,
+  .crew-card img {
+    height: 140px;
+  }
+}
+
+/* Horizontal Scroll for Cast and Crew */
+.cast-container,
+.crew-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.cast-card,
+.crew-card {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+/* Action Icons */
+.action-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.action-icons .icon {
+  font-size: 2em;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  color: #fff;
+}
+
+.action-icons .icon:hover {
+  transform: scale(1.2);
+}

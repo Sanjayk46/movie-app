@@ -1,0 +1,26 @@
+.row-item {
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .row-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .row-item-image {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #444;
+  }
+  
+  .row-item-title {
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+  }
+  

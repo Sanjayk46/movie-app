@@ -1,0 +1,250 @@
+.tv-shows-page {
+    background-color: #141414;
+    color: #fff;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  .genre-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .genre-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .genre-button.active,
+  .genre-button:hover {
+    background-color: #e50914;
+  }
+  
+  .tv-shows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  
+  .tv-show-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .tv-show-poster {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s;
+  }
+  
+  .tv-show-poster:hover {
+    transform: scale(1.05);
+  }
+  
+  .tv-show-info {
+    text-align: center;
+    padding: 10px 5px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  
+  .pagination-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination-button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+  }
+  
+  .pagination-info {
+    font-size: 1rem;
+  }
+  /* Movies container styles */
+.movies-container {
+  width: 100%;
+  overflow: hidden;
+  background-color: #141414;
+  padding: 20px 0;
+}
+
+/* Category heading styles */
+.category {
+  position: relative;
+  font-size: 30px;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.category .select-dropdown {
+  cursor: pointer;
+  background-color: #000;
+  border: 1px solid white;
+  color: white;
+  margin-left: 20px;
+  padding: 5px;
+  font-size: 1rem;
+  font-family: "Arial", sans-serif;
+  border-radius: 4px;
+}
+
+.select-dropdown:focus {
+  outline: none;
+  border-color: #ff2a68;
+}
+
+.select-dropdown option {
+  background-color: #000;
+  color: white;
+}
+
+.select-dropdown:hover {
+  border-color: #ff2a68;
+}
+
+/* Rows container */
+.rows {
+  margin-top: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0 30px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .category {
+    font-size: 25px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .select-dropdown {
+    font-size: 0.9rem;
+    margin-left: 0;
+  }
+
+  .rows {
+    padding: 0 8px;
+  }
+}
+
+  @media (max-width: 768px) {
+    .category {
+      font-size: 25px;
+    }
+  
+    .select-dropdown {
+      font-size: 0.9rem;
+      margin-left: 10px;
+    }
+  
+    .rows {
+      padding: 0 8px;
+      margin-top: 150px;
+    }
+  }
+  /* Overall container styling */
+.movies-container {
+  padding: 20px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Filters section */
+.filters {
+  background: var(--card-background);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filters-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.filters-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--secondary-color);
+}
+
+.filter-select {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+
+  background: white;
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Movies grid */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Styling individual movie cards */
+.row-item {
+  background: var(--card-background);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.row-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}

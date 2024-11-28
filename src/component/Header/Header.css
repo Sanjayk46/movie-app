@@ -1,0 +1,106 @@
+.hero-section {
+  height: 70vh; /* Adjust the height as needed */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.7); /* Dark overlay for better text visibility */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  color: white;
+}
+
+.hero-content {
+  max-width: 800px;
+  text-align: center;
+  margin: auto;
+  z-index: 2; /* Ensure it's above other elements */
+}
+
+.hero-content h1 {
+  font-size: 2.5rem; /* Adjust for prominence */
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.movie-overview {
+  margin: 15px 0;
+  font-size: 1.2rem; /* Slightly larger for readability */
+  line-height: 1.6;
+  color: #ccc; /* Softer text color */
+}
+
+.cta-button {
+  background: #e50914;
+  color: white;
+  padding: 12px 25px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+  background: #f40612;
+  transform: scale(1.05);
+}
+
+.pagination-icons {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  padding: 0 20px;
+  z-index: 2; /* Ensure it's visible */
+}
+
+.pagination-button {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 2rem;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.pagination-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0) 90%);
+  z-index: 1; /* Ensure it overlays the background but under content */
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}

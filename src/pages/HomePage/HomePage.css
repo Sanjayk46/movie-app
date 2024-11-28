@@ -1,0 +1,106 @@
+.movie-showcase {
+  position: relative;
+  padding: 1rem;
+}
+
+.movie-carousel {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* Hides scrollbars */
+}
+
+.movie-container {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  overflow: hidden; /* Allows horizontal scrolling without showing scrollbars */
+  scroll-behavior: smooth; /* Smooth scrolling */
+  -webkit-overflow-scrolling: touch; /* Enables smooth scrolling on iOS devices */
+}
+
+.scroll-button {
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.scroll-button.left {
+  left: 10px;
+}
+
+.scroll-button.right {
+  right: 10px;
+}
+
+.scroll-button:hover {
+  background-color: rgba(0, 0, 0, 0.9); /* Darker background on hover */
+}
+
+/* Movie Cards */
+.movie-card {
+  flex: 0 0 auto;
+  width: 200px;
+  text-align: center;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.movie-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.movie-card h3 {
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+/* hero section */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 60vh; /* Adjust the height as needed */
+  background-size: cover; /* Ensures the image covers the section */
+  background-position: center; /* Keeps the focus in the center */
+  color: white;
+}
+
+
+.hero-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  max-width: 90%;
+  padding: 20px;
+  color:white;
+  background: rgba(0, 0, 0, 0.5); /* Optional: for better text visibility */
+}
+
+.cta-button {
+  padding: 10px 20px;
+  background-color: #f40612;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.cta-button:hover {
+  background-color: #f40612;
+}
