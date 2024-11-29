@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { IconMoon, IconSun, IconSearch, IconDeviceTvOld, IconMovie, IconHome } from "@tabler/icons-react";
+import React, { useState, useEffect, useRef } from "react";
+import { IconMoon, IconSun, IconSearch, IconDeviceTvOld, IconMovie } from "@tabler/icons-react";
 import { useTheme } from "../../context/useThemeContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./navBar.css";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dropdownRef = useRef(null); // Reference to the dropdown menu
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userToken = localStorage.getItem("userToken");
@@ -26,19 +28,37 @@ export default function Navbar() {
     setIsLoggedIn(false);
   };
 
+  const handleClick = () => {
+    navigate('/');
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         {/* Left Section */}
         <div className="navbar-left">
           <div className="navbar-brand">
-            {/* Netflix Text instead of logo */}
-            <span className="netflix-text">NETFLIX</span>
+            <span onClick={handleClick} className="netflix-text">NETFLIX</span>
           </div>
           <ul className="navbar-links">
             <li><Link to="/search"><IconSearch /> Search</Link></li>
             <li><Link to="/movie"><IconMovie /> Movies</Link></li>
-            <li><Link to="/tvshow"><IconDeviceTvOld /> TV Shows</Link></li>
+            <li><Link to="/tv"><IconDeviceTvOld /> TV Shows</Link></li>
           </ul>
         </div>
 
@@ -58,14 +78,16 @@ export default function Navbar() {
 
           {/* Conditionally render Login or User button */}
           {isLoggedIn ? (
-            <div className="dropdown">
+            <div className="dropdown" ref={dropdownRef}>
               <button className="dropdown-toggle" onClick={toggleDropdown}>
                 User
               </button>
               {isDropdownOpen && (
                 <div className="dropdown-menu">
-                  <a href="#">Profile</a>
-                  <a href="#" onClick={handleLogout}>Logout</a>
+                  <Link to='/profile'><a href="#">Profile</a></Link>
+                  <Link to='/favorites'><a href="#">Favorite</a></Link>
+                  <Link to='/watchlist'><a href="#">WatchList</a></Link>
+                  <Link><a href="#" onClick={handleLogout}>Logout</a></Link>
                 </div>
               )}
             </div>

@@ -10,11 +10,11 @@ const api_key = API_KEY;
 const MoviesContext = createContext(null);
 
 // Utility function to fetch raw movie or tv show data
-const getRawData = async (api, paging = false) => {
+const getRawData = async (api) => {
   const itemsArray = [];
   try {
     for (let i = 1; itemsArray.length < 100 && i <= 5; i++) {
-      const response = await publicRequest.get(`${api}${paging ? `&page=${i}` : ''}`);
+      const response = await publicRequest.get(`${api}&page=${i}`);
       console.log('API Response:', response); // Log the response
       const results = response.data.results;
       results.forEach((item) => {
@@ -31,35 +31,53 @@ const getRawData = async (api, paging = false) => {
 };
 
 export const MoviesProvider = ({ children }) => {
-  const location = useLocation(); // Use useLocation to get the current path
-  const [movies, setMovies] = useState([]); // For movies
-  const [tvShows, setTvShows] = useState([]); // For TV shows
-  const [genres, setGenres] = useState([]); // Genres list
-  const [isLoading, setIsLoading] = useState(false); // Loading state
-  const [genre, setGenre] = useState('28'); // Default genre
-  const [language, setLanguage] = useState('en'); // Default language
-  const [pageType, setPageType] = useState(); // Default to movie, could be tv
+  const location = useLocation();
+  const [movies, setMovies] = useState([]);
+  const [tvShows, setTvShows] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [genre, setGenre] = useState('');
+  const [language, setLanguage] = useState('en');
+  const [pageType, setPageType] = useState();
 
-  // Dynamically set pageType based on the URL path
+  // Set the page type based on the URL
   useEffect(() => {
-    
     const pathSegments = location.pathname.split('/');
-    const type = pathSegments[0] === 'tv' || pathSegments[1] === 'tv' ? 'tv' : 'movie'; // Check both parts of the path
-    console.log(type) // Get the first part of the path
-    setPageType(type === 'tv' ? 'tv' : 'movie'); // Set pageType to 'tv' or 'movie'
-  }, [location.pathname]); // Trigger on path change
-  // Fetch movies or tv shows based on pageType
+    const type = pathSegments.includes('tv') ? 'tv' : 'movie';
+    setPageType(type);
+  }, [location.pathname]);
+
+  // Fetch genres when pageType, genre, or language changes
+  useEffect(() => {
+    if (pageType) fetchGenres();
+  }, [pageType]);
+
+  // Fetch movies or TV shows based on genre and language
   useEffect(() => {
     if (pageType === 'movie') {
       fetchMovies();
-    } else{
+    } else if (pageType === 'tv') {
       fetchTvShows();
     }
-    if (genres.length === 0) {
-      fetchGenres();
+  }, [pageType, genre, language]);
+
+  // Fetch genres from the API based on page type (movie or tv)
+  const fetchGenres = async () => {
+    const endpoint =
+      pageType === 'tv'
+        ? `/genre/tv/list?api_key=${api_key}`
+        : `/genre/movie/list?api_key=${api_key}`;
+    try {
+      const response = await publicRequest.get(endpoint);
+      setGenres(response.data.genres || []);
+      console.log('Fetched Genres:', response.data.genres);
+    } catch (error) {
+      toast.error('Error fetching genres');
+      console.error('Fetch Genres Error:', error);
     }
-  }, [pageType, genre, language]); // Trigger when pageType, genre, or language changes
-  // Fetch Movies and TV Shows
+  };
+
+  // Fetch movies based on the selected genre and language
   const fetchMovies = async () => {
     setIsLoading(true);
     try {
@@ -68,36 +86,22 @@ export const MoviesProvider = ({ children }) => {
       setMovies(data);
     } catch (error) {
       toast.error('Error fetching movies');
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
-  
+
+  // Fetch TV shows based on the selected genre and language
   const fetchTvShows = async () => {
     setIsLoading(true);
     try {
       const apiEndpoint = `/discover/tv?api_key=${api_key}&with_genres=${genre}&with_original_language=${language}`;
       const data = await getRawData(apiEndpoint);
-      console.log('Fetching TV shows with URL:', apiEndpoint); // Log the API URL for debugging
-      const response = await publicRequest.get(apiEndpoint);
-      console.log('TV Shows API Response:', response);
       setTvShows(data);
     } catch (error) {
       toast.error('Error fetching TV shows');
-      console.error(error);
     } finally {
       setIsLoading(false);
-    }
-  };
-  
-  // Fetch genres
-  const fetchGenres = async () => {
-    try {
-      const { data: { genres } } = await publicRequest.get(`/genre/movie/list?api_key=${api_key}`);
-      setGenres(genres);
-    } catch (error) {
-      toast.error('Error fetching genres');
     }
   };
 
@@ -113,7 +117,7 @@ export const MoviesProvider = ({ children }) => {
         pageType,
         setGenre,
         setLanguage,
-        setPageType, // Allow components to set pageType
+        setPageType,
       }}
     >
       {children}

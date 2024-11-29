@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/UserContext"; // Import useAuth to access AuthContext
+import { toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 
 export default function LoginPage() {
+  const { login } = useAuth(); // Access login function from AuthContext
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      alert("Logged in successfully!");
-    } else {
-      alert("Please fill in all fields.");
+
+    if (!email || !password) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      await login(email, password); // Call the login function from AuthContext
+      toast.success("Logged in successfully!");
+      navigate("/"); // Redirect to home or a dashboard upon successful login
+    } catch (error) {
+      toast.error(error.response?.data || "Login failed. Please try again.");
+      console.error("Login failed", error);
     }
   };
 
@@ -40,10 +55,12 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="sign-up-text">
-          New to Netflix? <a href="#">Sign up now.</a>
+          New to Netflix?{" "}
+          <Link to="/register">
+            <a href="#">Sign up now.</a>
+          </Link>
         </p>
       </div>
     </div>
   );
-};
-
+}

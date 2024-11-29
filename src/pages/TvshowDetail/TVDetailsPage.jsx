@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Added useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import { IconHeart, IconStar, IconHeartFilled, IconPlus, IconCheck } from "@tabler/icons-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_URL, API_KEY, IMAGE_BASE_URL, POSTER_SIZE, PROFILE_SIZE } from "../../Constant/Constant";
-import "./MovieDetailPage.css";
+import "./TVDetailsPage.css";
 import LoadingSpinner from "../../component/Loader/Loader";
 
-export default function MovieDetailsPage() {
+export default function TVDetailsPage() {
   const { id } = useParams();
-  const navigate = useNavigate(); // To navigate to favorites or comments page
-  const [movieDetails, setMovieDetails] = useState(null);
+  const navigate = useNavigate();
+  const [tvDetails, setTVDetails] = useState(null);
   const [cast, setCast] = useState([]);
   const [crew, setCrew] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -19,89 +19,85 @@ export default function MovieDetailsPage() {
   const [trailer, setTrailer] = useState(null);
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
+    const fetchTVDetails = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${API_URL}movie/${id}?api_key=${API_KEY}&language=en-US`);
+        const response = await fetch(`${API_URL}tv/${id}?api_key=${API_KEY}&language=en-US`);
         const data = await response.json();
-        setMovieDetails(data);
+        setTVDetails(data);
 
-        const creditsResponse = await fetch(`${API_URL}movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
+        const creditsResponse = await fetch(`${API_URL}tv/${id}/credits?api_key=${API_KEY}&language=en-US`);
         const creditsData = await creditsResponse.json();
         setCast(creditsData.cast);
         setCrew(creditsData.crew);
 
-        const videosResponse = await fetch(`${API_URL}movie/${id}/videos?api_key=${API_KEY}&language=en-US`);
+        const videosResponse = await fetch(`${API_URL}tv/${id}/videos?api_key=${API_KEY}&language=en-US`);
         const videosData = await videosResponse.json();
         const trailerData = videosData.results.find((video) => video.type === "Trailer");
         setTrailer(trailerData ? trailerData.key : null);
 
-        // Check if the movie is already in favorites or watchlist
-        const savedFavorites = JSON.parse(localStorage.getItem("favoriteMovies")) || [];
-        setIsFavorite(savedFavorites.some((movie) => movie.id === data.id));
+        // Check if the show is already in favorites or watchlist
+        const savedFavorites = JSON.parse(localStorage.getItem("favoriteTVShows")) || [];
+        setIsFavorite(savedFavorites.some((show) => show.id === data.id));
 
-        const savedWatchlist = JSON.parse(localStorage.getItem("watchlistMovies")) || [];
-        setIsInWatchlist(savedWatchlist.some((movie) => movie.id === data.id));
+        const savedWatchlist = JSON.parse(localStorage.getItem("watchlistTVShows")) || [];
+        setIsInWatchlist(savedWatchlist.some((show) => show.id === data.id));
       } catch (error) {
-        console.error("Error fetching movie details:", error);
+        console.error("Error fetching TV details:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchMovieDetails();
+    fetchTVDetails();
   }, [id]);
 
   const handleFavoriteToggle = () => {
-    const savedFavorites = JSON.parse(localStorage.getItem("favoriteMovies")) || [];
+    const savedFavorites = JSON.parse(localStorage.getItem("favoriteTVShows")) || [];
     if (isFavorite) {
-      // Remove from favorites
-      const updatedFavorites = savedFavorites.filter((movie) => movie.id !== movieDetails.id);
-      localStorage.setItem("favoriteMovies", JSON.stringify(updatedFavorites));
-      toast.error(`${movieDetails.title} removed from Favorites!`);
+      const updatedFavorites = savedFavorites.filter((show) => show.id !== tvDetails.id);
+      localStorage.setItem("favoriteTVShows", JSON.stringify(updatedFavorites));
+      toast.error(`${tvDetails.name} removed from Favorites!`);
     } else {
-      // Add to favorites
-      const updatedFavorites = [...savedFavorites, movieDetails];
-      localStorage.setItem("favoriteMovies", JSON.stringify(updatedFavorites));
-      toast.success(`${movieDetails.title} added to Favorites!`);
+      const updatedFavorites = [...savedFavorites, tvDetails];
+      localStorage.setItem("favoriteTVShows", JSON.stringify(updatedFavorites));
+      toast.success(`${tvDetails.name} added to Favorites!`);
     }
     setIsFavorite(!isFavorite);
   };
 
   const handleWatchlistToggle = () => {
-    const savedWatchlist = JSON.parse(localStorage.getItem("watchlistMovies")) || [];
+    const savedWatchlist = JSON.parse(localStorage.getItem("watchlistTVShows")) || [];
     if (isInWatchlist) {
-      // Remove from watchlist
-      const updatedWatchlist = savedWatchlist.filter((movie) => movie.id !== movieDetails.id);
-      localStorage.setItem("watchlistMovies", JSON.stringify(updatedWatchlist));
-      toast.error(`${movieDetails.title} removed from Watchlist!`);
+      const updatedWatchlist = savedWatchlist.filter((show) => show.id !== tvDetails.id);
+      localStorage.setItem("watchlistTVShows", JSON.stringify(updatedWatchlist));
+      toast.error(`${tvDetails.name} removed from Watchlist!`);
     } else {
-      // Add to watchlist
-      const updatedWatchlist = [...savedWatchlist, movieDetails];
-      localStorage.setItem("watchlistMovies", JSON.stringify(updatedWatchlist));
-      toast.success(`${movieDetails.title} added to Watchlist!`);
+      const updatedWatchlist = [...savedWatchlist, tvDetails];
+      localStorage.setItem("watchlistTVShows", JSON.stringify(updatedWatchlist));
+      toast.success(`${tvDetails.name} added to Watchlist!`);
     }
     setIsInWatchlist(!isInWatchlist);
   };
 
   if (loading) return <LoadingSpinner/>;
-  if (!movieDetails) return <p>No movie details found.</p>;
+  if (!tvDetails) return <p>No TV details found.</p>;
 
-  const starRating = Math.round(movieDetails.vote_average / 2);
+  const starRating = Math.round(tvDetails.vote_average / 2);
   const director = crew.find((member) => member.job === "Director");
 
   return (
-    <div className="movie-details-page">
+    <div className="tv-details-page">
       <ToastContainer />
       <div
-        className="movie-banner"
+        className="tv-banner"
         style={{
-          backgroundImage: `url(${IMAGE_BASE_URL}${POSTER_SIZE}${movieDetails.backdrop_path})`,
+          backgroundImage: `url(${IMAGE_BASE_URL}${POSTER_SIZE}${tvDetails.backdrop_path})`,
         }}
       >
-        <div className="movie-info">
-          <div className="movie-header">
-            <h1>{movieDetails.title}</h1>
+        <div className="tv-info">
+          <div className="tv-header">
+            <h1>{tvDetails.name}</h1>
             <div className="action-icons" style={{ display: "flex", flexDirection: "row" }}>
               <div onClick={handleFavoriteToggle}>
                 {isFavorite ? <IconHeartFilled size={24} color="#ff0000" /> : <IconHeart size={24} color="#ff6666" />}
@@ -114,13 +110,13 @@ export default function MovieDetailsPage() {
               <span>{isInWatchlist ? "In Watchlist" : "Add to Watchlist"}</span>
             </div>
           </div>
-          <p>{movieDetails.overview}</p>
+          <p>{tvDetails.overview}</p>
         </div>
       </div>
-      <div className="movie-details">
-        <h2>Movie Details</h2>
-        <p><strong>Release Date:</strong> {movieDetails.release_date}</p>
-        <p><strong>IMDb Rating:</strong> {movieDetails.vote_average}/10</p>
+      <div className="tv-details">
+        <h2>TV Details</h2>
+        <p><strong>First Air Date:</strong> {tvDetails.first_air_date}</p>
+        <p><strong>IMDb Rating:</strong> {tvDetails.vote_average}/10</p>
         <div className="star-rating">
           {Array(5)
             .fill()
@@ -132,13 +128,8 @@ export default function MovieDetailsPage() {
               )
             )}
         </div>
-        <p><strong>Language:</strong> {movieDetails.original_language.toUpperCase()}</p>
+        <p><strong>Language:</strong> {tvDetails.original_language.toUpperCase()}</p>
         {director && <p><strong>Director:</strong> {director.name}</p>}
-        {movieDetails.awards ? (
-          <p><strong>Awards:</strong> {movieDetails.awards}</p>
-        ) : (
-          <p><strong>Awards:</strong> None</p>
-        )}
       </div>
       {trailer && (
         <div className="trailer-section">
@@ -150,7 +141,7 @@ export default function MovieDetailsPage() {
             frameBorder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            title="Movie Trailer"
+            title="TV Show Trailer"
           ></iframe>
         </div>
       )}

@@ -94,9 +94,22 @@ export default function HomePage() {
     });
   };
 
+  // Filter out duplicate movies based on movie id
+  const uniqueMovies = movies.filter((movie, index, self) =>
+    index === self.findIndex((m) => m.id === movie.id)
+  );
+
+  // Filter out duplicate movies for each genre
+  const uniqueGenreMovies = Object.keys(genreMovies).reduce((acc, genreId) => {
+    const uniqueMoviesForGenre = genreMovies[genreId].filter((movie, index, self) =>
+      index === self.findIndex((m) => m.id === movie.id)
+    );
+    acc[genreId] = uniqueMoviesForGenre;
+    return acc;
+  }, {});
+
   return (
     <div className="home-page">
-      <Navbar />
       <Header
         mainMovie={mainMovie}
         goToNextMovie={goToNextMovie}
@@ -104,17 +117,16 @@ export default function HomePage() {
         theme={theme}
       />
 
+      {/* Render movies by genre */}
       {genres.map((genre) => (
         <MovieContainer
           key={genre.id}
           title={genre.name}
-          items={genreMovies[genre.id] || []}
+          items={uniqueGenreMovies[genre.id] || []}
           type="movie"
           theme={theme}
         />
       ))}
-
-      <Footer />
     </div>
   );
 }

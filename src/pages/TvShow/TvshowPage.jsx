@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import RowItem from "../../component/RowItem/RowItem";
-import { useMovies } from "../../context/useMovieContext";
-import { useTheme } from "../../context/useThemeContext";
-import LoadingSpinner from "../../component/Loader/Loader";
-import "./TvShowPage.css";
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import RowItem from '../../component/RowItem/RowItem';
+import { useMovies } from '../../context/useMovieContext';
+import { useTheme } from '../../context/useThemeContext';
+import LoadingSpinner from '../../component/Loader/Loader';
+import './TvShowPage.css';
 
 export default function TvShowPage() {
   const location = useLocation();
@@ -21,9 +21,14 @@ export default function TvShowPage() {
   } = useMovies();
 
   useEffect(() => {
-    const type = location?.pathname.split("/")[1];
-    setPageType(type === "tv" ? "tv" : "movie");
+    const type = location?.pathname.split('/')[1];
+    setPageType(type === 'tv' ? 'tv' : 'movie');
   }, [location, setPageType]);
+
+  // Filter out duplicate TV shows based on TV show id
+  const uniqueTvShows = tvShows.filter((tv, index, self) =>
+    index === self.findIndex((t) => t.id === tv.id)
+  );
 
   return (
     <div className={`movies-container ${theme}`}>
@@ -70,8 +75,8 @@ export default function TvShowPage() {
         </div>
       </div>
 
-      <div className="tvshows-grid">
-        {tvShows?.map((tv) => (
+      <div className="movies-grid">
+        {uniqueTvShows?.map((tv) => (
           <RowItem
             key={tv.id}
             movieData={tv}

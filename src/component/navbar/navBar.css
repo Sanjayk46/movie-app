@@ -76,7 +76,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 /* Theme Toggle Button */
@@ -120,12 +120,13 @@
   border: none;
   color: var(--text-color);
   font-size: 1rem;
+  background-color: #e50914;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 10px 30px;
 }
 
 .dropdown-toggle:hover {
-  color: var(--text-hover-color);
+  color: white;
 }
 
 .dropdown-menu {

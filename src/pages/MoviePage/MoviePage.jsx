@@ -22,9 +22,14 @@ export default function MoviesPage() {
 
   // Dynamically set pageType based on URL path
   useEffect(() => {
-    const type = location?.pathname.split("/")[1];
-    setPageType(type === "tv" ? "tv" : "movies");
+    const type = location?.pathname.split("/")[1]; // Check if 'movies' or 'tv' is part of the path
+    setPageType(type === "tv" ? "tv" : "movie");
   }, [location, setPageType]);
+
+  // Filter out duplicate movies based on movie id
+  const uniqueMovies = movies.filter((movie, index, self) =>
+    index === self.findIndex((m) => m.id === movie.id)
+  );
 
   return (
     <div className={`movies-container ${theme}`}>
@@ -72,7 +77,7 @@ export default function MoviesPage() {
       </div>
 
       <div className="movies-grid">
-        {movies?.map((movie) => (
+        {uniqueMovies?.map((movie) => (
           <RowItem
             key={movie.id}
             movieData={movie}

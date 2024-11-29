@@ -1,5 +1,6 @@
 import axios from 'axios';
-const AxiosService = axios.create({
+
+export const AxiosService = axios.create({
   baseURL: 'http://localhost:8000/',
   headers: {
     "Content-Type": "application/json",
@@ -17,4 +18,3 @@ export const publicRequest = axios.create({
 //   return config;
 //});
 
-export default AxiosService;
