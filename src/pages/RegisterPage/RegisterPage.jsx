@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./RegisterPage.css";
 import { useAuth } from "../../context/UserContext";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function RegisterPage() {
-  const { register, user } = useAuth(); // Access register function and user from AuthContext
+  const  auth  = useAuth(); // Access register function and user from AuthContext
+  const {user} = auth
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const returnUrl = params.get("returnUrl");
@@ -25,19 +27,22 @@ export default function RegisterPage() {
     e.preventDefault();
 
     if (!name || !email || !password || !confirmPassword) {
-      alert("Please fill in all fields.");
+      toast.error("Please fill in all fields.");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      toast.error("Passwords do not match.");
       return;
     }
 
     try {
-      await register({ name, email, password }); // Call the register function from AuthContext
+      // Call the register function from AuthContext
+      await auth.register({ name, email, password });
+      toast.success("Registration successful!");
     } catch (error) {
       console.error("Registration failed", error);
+      toast.error("Registration failed. Please try again.");
     }
   };
 

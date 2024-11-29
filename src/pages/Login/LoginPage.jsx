@@ -1,41 +1,40 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./LoginPage.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/UserContext"; // Import useAuth to access AuthContext
 import { toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 
 export default function LoginPage() {
-  const { user, login } = useAuth(); // Access login function from AuthContext
+  const auth = useAuth(); // Access login function and user from AuthContext
+  const {user} = auth;
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const returnUrl = params.get("returnUrl");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) return;
+    if (user) {
+      // Redirect user after successful login
+      returnUrl ? navigate(returnUrl) : navigate("/");
+    }
+  }, [user, returnUrl, navigate]);
 
-    returnUrl ? navigate(returnUrl) : navigate('/');
-  }, [user]);
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  const handleLogin = async () => {
     if (!email || !password) {
-      toast({
-        title: 'Please fill all the fields',
-        status: 'warning',
-        duration: 5000,
-        isClosable: true,
-        position: 'bottom',
-      });
+      toast.warning("Please fill in all fields.");
       return;
     }
 
     try {
-      await login(email, password); // Call the login function from AuthContext
+      await user.login(email, password); // Call the login function from AuthContext
       toast.success("Logged in successfully!");
-      navigate("/"); // Redirect to home or a dashboard upon successful login
     } catch (error) {
+      console.error("Login failed:", error);
       toast.error(error.response?.data || "Login failed. Please try again.");
-      console.error("Login failed", error);
     }
   };
 
@@ -67,7 +66,7 @@ export default function LoginPage() {
         <p className="sign-up-text">
           New to Netflix?{" "}
           <Link to="/register">
-            <a href="#">Sign up now.</a>
+            Sign up now.
           </Link>
         </p>
       </div>

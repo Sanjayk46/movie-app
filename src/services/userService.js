@@ -1,15 +1,18 @@
+ import {AxiosService} from "../AxiosService"
+
+
 export const getUser = () =>
     localStorage.getItem('user')
       ? JSON.parse(localStorage.getItem('user'))
       : null;
   
   export const login = async (email, password) => {
-    const { data } = await AxiosService.post('api/users/login', { email, password });
+    const { data } = await AxiosService.post('api/user/login', { email, password });
     localStorage.setItem('user', JSON.stringify(data));
     return data;
   };
   export const register = async registerData =>{
-    const {data} = await AxiosService.post('api/users/register',registerData);
+    const {data} = await AxiosService.post('api/user/register',registerData);
     localStorage.setItem('user',JSON.stringify(data));
     return data;
   }
@@ -18,7 +21,7 @@ export const getUser = () =>
       localStorage.removeItem('user');
     };
     export const updateProfile = async user => {
-      const { data } = await AxiosService.put('/api/users/updateProfile', user);
+      const { data } = await AxiosService.put('/api/user/updateProfile', user);
       localStorage.setItem('user', JSON.stringify(data));
       return data;
     };

@@ -15,7 +15,6 @@ const getRawData = async (api) => {
   try {
     for (let i = 1; itemsArray.length < 100 && i <= 5; i++) {
       const response = await publicRequest.get(`${api}&page=${i}`);
-      console.log('API Response:', response); // Log the response
       const results = response.data.results;
       results.forEach((item) => {
         if (item.backdrop_path) {
@@ -70,7 +69,6 @@ export const MoviesProvider = ({ children }) => {
     try {
       const response = await publicRequest.get(endpoint);
       setGenres(response.data.genres || []);
-      console.log('Fetched Genres:', response.data.genres);
     } catch (error) {
       toast.error('Error fetching genres');
       console.error('Fetch Genres Error:', error);
