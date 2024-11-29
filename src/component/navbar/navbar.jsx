@@ -1,35 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IconMoon, IconSun, IconSearch, IconDeviceTvOld, IconMovie } from "@tabler/icons-react";
 import { useTheme } from "../../context/useThemeContext";
+import { useAuth } from "../../context/UserContext"; // Import your useAuth hook
 import { Link, useNavigate } from "react-router-dom";
 import "./navBar.css";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
+  const { user, logout } = useAuth(); // Get user details and logout from useAuth
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const dropdownRef = useRef(null); // Reference to the dropdown menu
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const userToken = localStorage.getItem("userToken");
-    setIsLoggedIn(!!userToken);
-  }, []);
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
 
-  const handleLogin = () => {
-    localStorage.setItem("userToken", "your-jwt-token");
-    setIsLoggedIn(true);
-  };
-
   const handleLogout = () => {
-    localStorage.removeItem("userToken");
-    setIsLoggedIn(false);
-  };
-
-  const handleClick = () => {
-    navigate('/');
+    logout();
+    navigate("/login");
   };
 
   // Close dropdown when clicking outside
@@ -53,7 +40,7 @@ export default function Navbar() {
         {/* Left Section */}
         <div className="navbar-left">
           <div className="navbar-brand">
-            <span onClick={handleClick} className="netflix-text">NETFLIX</span>
+            <span onClick={() => navigate('/')} className="netflix-text">NETFLIX</span>
           </div>
           <ul className="navbar-links">
             <li><Link to="/search"><IconSearch /> Search</Link></li>
@@ -61,9 +48,6 @@ export default function Navbar() {
             <li><Link to="/tv"><IconDeviceTvOld /> TV Shows</Link></li>
           </ul>
         </div>
-
-        {/* Middle Spacer */}
-        <div className="navbar-middle"></div>
 
         {/* Right Section */}
         <div className="navbar-right">
@@ -76,25 +60,23 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Conditionally render Login or User button */}
-          {isLoggedIn ? (
+          {/* User Dropdown */}
+          {user ? (
             <div className="dropdown" ref={dropdownRef}>
               <button className="dropdown-toggle" onClick={toggleDropdown}>
-                User
+                {user.name}
               </button>
               {isDropdownOpen && (
                 <div className="dropdown-menu">
-                  <Link to='/profile'><a href="#">Profile</a></Link>
-                  <Link to='/favorites'><a href="#">Favorite</a></Link>
-                  <Link to='/watchlist'><a href="#">WatchList</a></Link>
-                  <Link><a href="#" onClick={handleLogout}>Logout</a></Link>
+                  <Link to="/profile">Profile</Link>
+                  <Link to="/favorites">Favorites</Link>
+                  <Link to="/watchlist">Watchlist</Link>
+                  <button onClick={handleLogout}>Logout</button>
                 </div>
               )}
             </div>
           ) : (
-            <button onClick={handleLogin}>
-              Sign in
-            </button>
+            <button onClick={() => navigate("/login")}>Sign in</button>
           )}
         </div>
       </div>

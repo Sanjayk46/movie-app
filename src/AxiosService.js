@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const AxiosService = axios.create({
-  baseURL: 'http://localhost:8000/',
+  baseURL: 'https://movie-app-backend-aqaf.onrender.com',
   headers: {
     "Content-Type": "application/json",
   },

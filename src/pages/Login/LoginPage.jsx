@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./LoginPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserContext"; // Import useAuth to access AuthContext
@@ -6,16 +6,26 @@ import { toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 
 export default function LoginPage() {
-  const { login } = useAuth(); // Access login function from AuthContext
+  const { user, login } = useAuth(); // Access login function from AuthContext
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (!user) return;
 
+    returnUrl ? navigate(returnUrl) : navigate('/');
+  }, [user]);
+
+  const handleLogin = async () => {
     if (!email || !password) {
-      toast.error("Please fill in all fields.");
+      toast({
+        title: 'Please fill all the fields',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
       return;
     }
 
