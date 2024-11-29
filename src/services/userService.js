@@ -12,7 +12,7 @@ export const getUser = () =>
     return data;
   };
   export const register = async registerData =>{
-    const {data} = await AxiosService.post('api/user/register',registerData);
+    const {data} = await AxiosService.post('api/user/',registerData);
     localStorage.setItem('user',JSON.stringify(data));
     return data;
   }
