@@ -1,26 +1,37 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import "./MovieContainer.css";
 
 const MovieContainer = ({ title, items, type, theme }) => {
-  const scrollLeft = (id) => {
-    const container = document.getElementById(id);
-    container.scrollLeft -= 200;
+  // Create a ref for the container
+  const containerRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollBy({
+        left: -200,
+        behavior: "smooth", // Smooth scrolling for better UX
+      });
+    }
   };
 
-  const scrollRight = (id) => {
-    const container = document.getElementById(id);
-    container.scrollLeft += 200;
+  const scrollRight = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollBy({
+        left: 200,
+        behavior: "smooth", // Smooth scrolling for better UX
+      });
+    }
   };
 
   return (
     <section className="movie-showcase">
       <h2 style={{ color: theme === "light" ? "red" : "white" }}>{title}</h2>
       <div className="movie-carousel">
-        <button className="scroll-button left" onClick={() => scrollLeft(`${type}-container`)}>
+        <button className="scroll-button left" onClick={scrollLeft}>
           &lt;
         </button>
-        <div className="movie-container" id={`${type}-container`}>
+        <div className="movie-container" ref={containerRef}>
           {items.length > 0 ? (
             items.map((item) => (
               <Link to={`/${type}/${item.id}`} key={item.id}>
@@ -41,7 +52,7 @@ const MovieContainer = ({ title, items, type, theme }) => {
             <p>No {type === "movie" ? "movies" : "TV shows"} found.</p>
           )}
         </div>
-        <button className="scroll-button right" onClick={() => scrollRight(`${type}-container`)}>
+        <button className="scroll-button right" onClick={scrollRight}>
           &gt;
         </button>
       </div>

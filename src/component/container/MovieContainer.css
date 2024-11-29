@@ -10,53 +10,33 @@
   
   .movie-container {
     display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding: 10px 20px;
-    scroll-behavior: smooth;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    scroll-behavior: smooth; /* Adds smooth scrolling behavior */
+    gap: 10px; /* Optional: spacing between items */
   }
   
   .movie-card {
-    flex: 0 0 auto;
-    width: 150px;
-    text-align: center;
-    color: white;
-    background-color: #141414;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .movie-card img {
-    width: 100%;
-    height: 225px;
-    object-fit: cover;
-    border-bottom: 2px solid #333;
+    min-width: 200px; /* Ensure cards have a minimum width */
+    flex-shrink: 0; /* Prevent cards from shrinking */
   }
   
   .scroll-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    z-index: 10;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
+    z-index: 1;
   }
   
   .scroll-button.left {
-    left: 10px;
+    left: 0;
   }
   
   .scroll-button.right {
-    right: 10px;
+    right: 0;
   }
   
