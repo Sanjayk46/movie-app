@@ -28,7 +28,7 @@ export default function ProfilePage() {
     }
 
     try {
-      await user.updateProfile({ name, email, password });
+      await auth.updateProfile({ name, email, password });
       toast.success("Profile updated successfully!");
     } catch (error) {
       toast.error(error.response?.data || "Profile update failed. Please try again.");

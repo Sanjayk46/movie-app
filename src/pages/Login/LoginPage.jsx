@@ -4,10 +4,11 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/UserContext"; // Import useAuth to access AuthContext
 import { toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
-
+import {useTheme} from "../../context/useThemeContext"
 export default function LoginPage() {
   const auth = useAuth(); // Access login function and user from AuthContext
   const {user} = auth;
+  const {theme} = useTheme();
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const returnUrl = params.get("returnUrl");
@@ -19,27 +20,14 @@ export default function LoginPage() {
       // Redirect user after successful login
       returnUrl ? navigate(returnUrl) : navigate("/");
     }
-  }, [user, returnUrl, navigate]);
+  }, [user]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    if (!email || !password) {
-      toast.warning("Please fill in all fields.");
-      return;
-    }
-
-    try {
-      await user.login(email, password); // Call the login function from AuthContext
-      toast.success("Logged in successfully!");
-    } catch (error) {
-      console.error("Login failed:", error);
-      toast.error(error.response?.data || "Login failed. Please try again.");
-    }
+  const handleLogin = async () => {
+      await auth.login(email, password); // Call the login function from AuthContext    
   };
 
   return (
-    <div className="login-container">
+    <div className={`login-container ${theme}`}>
       <div className="login-box">
         <h1>Sign In</h1>
         <form onSubmit={handleLogin}>
@@ -64,8 +52,8 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="sign-up-text">
-          New to Netflix?{" "}
-          <Link to="/register">
+          New to Netflix?{"  "}
+          <Link className={`sign-up-link ${theme}`} to="/register">
             Sign up now.
           </Link>
         </p>

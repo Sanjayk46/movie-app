@@ -83,3 +83,133 @@ body {
     }
   }
   
+  /* Common styles */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+/* Dark Theme */
+.login-container.dark {
+  background-color: #141414;
+  color: #e5e5e5;
+}
+
+.login-container.dark .login-box {
+  background-color: #222;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.login-container.dark .login-button {
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+}
+
+.login-container.dark .login-button:hover {
+  background-color: #ff1515;
+}
+
+.login-container.dark .input-group input {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+/* Light Theme */
+.login-container.light {
+  background-color: #ffffff;
+  color: #213547;
+}
+
+.login-container.light .login-box {
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-container.light .login-button {
+  background-color: #ff1515;
+  color: #fff;
+  border: none;
+}
+
+.login-container.light .login-button:hover {
+  background-color: #ff1515;
+}
+
+.login-container.light .input-group input {
+  background-color: #f1f1f1;
+  color: #000;
+  border: 1px solid #ddd;
+}
+
+/* Login Box */
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.login-box h1 {
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sign-up-text {
+  margin-top: 15px;
+}
+
+.sign-up-text a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.sign-up-text a:hover {
+  color: var(--text-hover-color);
+}
+/* Default link styles */
+.sign-up-link {
+  
+  transition: color 0.3s ease;
+}
+
+/* Dark theme link styles */
+.sign-up-link.dark {
+  color: white;
+}
+
+.sign-up-link.dark:hover {
+  color: white;
+}
+
+/* Light theme link styles */
+.sign-up-link.light {
+  color: #ff1515;
+}
+
+.sign-up-link.light:hover {
+  color: #ff1515;
+}

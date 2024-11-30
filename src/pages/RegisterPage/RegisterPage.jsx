@@ -3,10 +3,11 @@ import "./RegisterPage.css";
 import { useAuth } from "../../context/UserContext";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { useTheme } from "../../context/useThemeContext";
 export default function RegisterPage() {
   const  auth  = useAuth(); // Access register function and user from AuthContext
   const {user} = auth
+  const {theme} = useTheme()
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const returnUrl = params.get("returnUrl");
@@ -21,7 +22,7 @@ export default function RegisterPage() {
       // Redirect user after successful registration
       returnUrl ? navigate(returnUrl) : navigate("/");
     }
-  }, [user, returnUrl, navigate]);
+  }, [user]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -47,7 +48,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="login-container">
+    <div className={`login-container ${theme}`}>
       <div className="login-box">
         <h1>Register</h1>
         <form onSubmit={handleRegister}>

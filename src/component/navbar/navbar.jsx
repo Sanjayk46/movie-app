@@ -71,7 +71,7 @@ export default function Navbar() {
                   <Link to="/profile">Profile</Link>
                   <Link to="/favorites">Favorites</Link>
                   <Link to="/watchlist">Watchlist</Link>
-                  <button onClick={handleLogout}>Logout</button>
+                  <Link onClick={handleLogout}>Logout</Link>
                 </div>
               )}
             </div>

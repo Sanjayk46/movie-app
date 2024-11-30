@@ -11,6 +11,7 @@ import MoviesPage from '../pages/MoviePage/MoviePage';
 import TVDetailsPage from '../pages/TvshowDetail/TVDetailsPage';
 import WatchlistPage from '../pages/WatchListPage/WatchListPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
+import  AuthRoute from "./AuthRoute"
 export default function AppRoutes(){
     return(
         <Routes>
@@ -18,10 +19,10 @@ export default function AppRoutes(){
             <Route path='/login' element={<LoginPage/>}/>
             {/* <Route path='/search' element={<Search/>}/> */}
             <Route path='/register' element={<RegisterPage/>}/>
-            <Route path='/profile' element={<ProfilePage/>}/>
-            <Route path="/movie/:id" element={<MovieDetailsPage/>}/>
-            <Route path='/tv/:id' element={<TVDetailsPage/>}/>
-            <Route path="/favorites" element={<FavoriteMoviesPage />} />
+            <Route path='/profile' element={<AuthRoute><ProfilePage/></AuthRoute>}/>
+            <Route path="/movie/:id" element={<AuthRoute><MovieDetailsPage/></AuthRoute>}/>
+            <Route path='/tv/:id' element={<AuthRoute><TVDetailsPage/></AuthRoute>}/>
+            <Route path="/favorites" element={<AuthRoute><FavoriteMoviesPage /></AuthRoute>} />
             <Route path="/watchlist" element={<WatchlistPage />} />
             <Route path="/search" element={<Search/>}></Route>
             <Route path="/movie" element={< MoviesPage/>} />
