@@ -26,14 +26,7 @@ export default function ProfilePage() {
       toast.error("Passwords do not match!");
       return;
     }
-
-    try {
       await auth.updateProfile({ name, email, password });
-      toast.success("Profile updated successfully!");
-    } catch (error) {
-      toast.error(error.response?.data || "Profile update failed. Please try again.");
-      console.error("Profile update error:", error);
-    }
   };
 
   return (

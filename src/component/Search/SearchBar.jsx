@@ -6,12 +6,13 @@ import Loader from "../Loader/Loader";
 import "./SearchBar.css";
 import { API_KEY } from "../../Constant/Constant";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useTheme } from "../../context/useThemeContext";
 
 export default function Search() {
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { theme } = useTheme(); // Access the theme from useThemeContext
   const api_key = API_KEY;
   const navigate = useNavigate(); // Initialize the navigate function
 
@@ -47,11 +48,9 @@ export default function Search() {
       const handleSearch = async () => {
         setLoading(true);
         try {
-          console.log("Fetching search results for:", search);
           const res = await publicRequest.get(
             `search/multi?api_key=${api_key}&query=${encodeURIComponent(search)}`
           );
-          console.log("Search results:", res.data.results);
           setMovies(res.data.results || []);
         } catch (error) {
           console.error("Error fetching search results:", error);
@@ -76,7 +75,7 @@ export default function Search() {
   };
 
   return (
-    <div className="search-container">
+    <div className="search-container" data-theme={theme}>
       <div className="search-bar">
         <input
           type="search"
@@ -97,7 +96,7 @@ export default function Search() {
                 movieData={movie}
                 index={index}
                 key={movie.id}
-                media_type={movie.media_type}// Handle the click and navigate
+                media_type={movie.media_type}
               />
             ))
           ) : (

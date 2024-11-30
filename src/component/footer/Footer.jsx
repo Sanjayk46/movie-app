@@ -35,7 +35,7 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2024 Netflix, Inc. All Rights Reserved.</p>
+        <p >@ 2024 Netflix, Inc. All Rights Reserved.</p>
       </div>
     </div>
   );

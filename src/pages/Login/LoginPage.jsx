@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./LoginPage.css";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useAuth } from "../../context/UserContext"; // Import useAuth to access AuthContext
-import { toast } from "react-toastify"; // Import Toastify
-import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
+import { useAuth } from "../../context/UserContext"; 
+import "react-toastify/dist/ReactToastify.css"; 
 import {useTheme} from "../../context/useThemeContext"
 export default function LoginPage() {
-  const auth = useAuth(); // Access login function and user from AuthContext
+  const auth = useAuth();
   const {user} = auth;
   const {theme} = useTheme();
   const navigate = useNavigate();
@@ -17,13 +16,12 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      // Redirect user after successful login
       returnUrl ? navigate(returnUrl) : navigate("/");
     }
   }, [user]);
 
   const handleLogin = async () => {
-      await auth.login(email, password); // Call the login function from AuthContext    
+      await auth.login(email, password); 
   };
 
   return (

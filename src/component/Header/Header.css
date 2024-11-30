@@ -94,7 +94,9 @@
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, rgba(0, 0, 0, 0) 90%);
   z-index: 1; /* Ensure it overlays the background but under content */
 }
-
+.icon-button{
+  background-color: #e50914;
+}
 .hero-section::after {
   content: '';
   position: absolute;

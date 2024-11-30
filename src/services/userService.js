@@ -21,7 +21,7 @@ export const getUser = () =>
       localStorage.removeItem('user');
     };
     export const updateProfile = async user => {
-      const { data } = await AxiosService.put('/api/user/updateProfile', user);
+      const { data } = await AxiosService.put('/api/user/profile', user);
       localStorage.setItem('user', JSON.stringify(data));
       return data;
     };

@@ -36,15 +36,7 @@ export default function RegisterPage() {
       toast.error("Passwords do not match.");
       return;
     }
-
-    try {
-      // Call the register function from AuthContext
       await auth.register({ name, email, password });
-      toast.success("Registration successful!");
-    } catch (error) {
-      console.error("Registration failed", error);
-      toast.error("Registration failed. Please try again.");
-    }
   };
 
   return (
