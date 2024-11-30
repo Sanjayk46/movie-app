@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ProfilePage() {
-  const auth = useAuth(); // Access updateProfile function from AuthContext
-  const {user} = auth;
+  const {user,updateProfile} = useAuth;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +25,7 @@ export default function ProfilePage() {
       toast.error("Passwords do not match!");
       return;
     }
-      await auth.updateProfile({ name, email, password });
+      await updateProfile({ name, email, password });
   };
 
   return (
@@ -38,6 +37,7 @@ export default function ProfilePage() {
             <input
               type="text"
               placeholder="Name"
+              defaultValue={user.name}
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -46,6 +46,7 @@ export default function ProfilePage() {
           <div className="input-group">
             <input
               type="email"
+              defaultValue={user.email}
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

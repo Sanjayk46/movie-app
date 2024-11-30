@@ -3,11 +3,11 @@ import "./LoginPage.css";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/UserContext"; 
 import "react-toastify/dist/ReactToastify.css"; 
-import {useTheme} from "../../context/useThemeContext"
+import { useTheme } from "../../context/useThemeContext";
+
 export default function LoginPage() {
-  const auth = useAuth();
-  const {user} = auth;
-  const {theme} = useTheme();
+  const { user, login } = useAuth();
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const returnUrl = params.get("returnUrl");
@@ -18,10 +18,15 @@ export default function LoginPage() {
     if (user) {
       returnUrl ? navigate(returnUrl) : navigate("/");
     }
-  }, [user]);
+  }, [user, returnUrl, navigate]);
 
-  const handleLogin = async () => {
-      await auth.login(email, password); 
+  const handleLogin = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    try {
+      await login(email, password); // Call login API
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
@@ -35,6 +40,7 @@ export default function LoginPage() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="input-group">
@@ -43,6 +49,7 @@ export default function LoginPage() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           <button type="submit" className="login-button">
@@ -50,7 +57,7 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="sign-up-text">
-          New to Netflix?{"  "}
+          New to Netflix?{" "}
           <Link className={`sign-up-link ${theme}`} to="/register">
             Sign up now.
           </Link>
