@@ -37,7 +37,6 @@ export default function ProfilePage() {
             <input
               type="text"
               placeholder="Name"
-              defaultValue={user.name}
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -46,7 +45,6 @@ export default function ProfilePage() {
           <div className="input-group">
             <input
               type="email"
-              defaultValue={user.email}
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
