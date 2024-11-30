@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./ProfilePage.css";
 import { useAuth } from "../../context/UserContext"; // Import useAuth for updateProfile
+import { useTheme } from "../../context/useThemeContext"; // Import useTheme for theme context
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ProfilePage() {
-  const {user,updateProfile} = useAuth;
+  const auth = useAuth(); // Access register function and user from AuthContext
+  const { user } = auth;
+  const { theme } = useTheme(); // Access theme from useTheme context
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,12 +28,13 @@ export default function ProfilePage() {
       toast.error("Passwords do not match!");
       return;
     }
-      await updateProfile({ name, email, password });
+
+    await auth.updateProfile({ name, email, password });
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
+    <div className={`profile-container ${theme}`}>
+      <div className="profile-box">
         <h1>Profile</h1>
         <form onSubmit={handleUpdateProfile}>
           <div className="input-group">

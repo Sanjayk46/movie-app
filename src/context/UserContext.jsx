@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   const updateProfile = async ({ name, email, password }) => {
     try {
       // Make an API call to update the profile
-      const response = await fetch("/api/profile", {
+      const response = await fetch("/api/user/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
