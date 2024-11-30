@@ -20,8 +20,19 @@ export const getUser = () =>
   export const logout = () => {
       localStorage.removeItem('user');
     };
-    export const updateProfile = async user => {
-      const { data } = await AxiosService.put('/api/user/profile', user);
-      localStorage.setItem('user', JSON.stringify(data));
-      return data;
-    };
+    
+    export const updateProfile = async (user) => {
+  const storedUser = getUser(); // Retrieve the stored user object
+  if (!storedUser || !storedUser.token) {
+    throw new Error("User not authenticated.");
+  }
+
+  const { data } = await AxiosService.put("/api/user/profile", user, {
+    headers: {
+      Authorization: `Bearer ${storedUser.token}`, // Send the token in the Authorization header
+    },
+  });
+
+  localStorage.setItem("user", JSON.stringify(data)); // Update user data in localStorage
+  return data;
+};

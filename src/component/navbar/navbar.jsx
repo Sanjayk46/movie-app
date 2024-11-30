@@ -54,9 +54,9 @@ export default function Navbar() {
           {/* Theme Toggle */}
           <div className="theme-toggle" onClick={toggleTheme} title="Toggle Theme">
             {theme === "light" ? (
-              <IconMoon size={24} title="Switch to Dark Mode" />
+              <IconSun size={24} title="Switch to Dark Mode" />
             ) : (
-              <IconSun size={24} title="Switch to Light Mode" />
+              <IconMoon size={24} title="Switch to Light Mode" />
             )}
           </div>
 

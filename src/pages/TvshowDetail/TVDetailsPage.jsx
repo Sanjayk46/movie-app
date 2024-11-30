@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { IconHeart, IconStar, IconHeartFilled, IconPlus, IconCheck } from "@tabler/icons-react";
+import {
+  IconHeart,
+  IconStar,
+  IconHeartFilled,
+  IconPlus,
+  IconCheck,
+} from "@tabler/icons-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { API_URL, API_KEY, IMAGE_BASE_URL, POSTER_SIZE, PROFILE_SIZE } from "../../Constant/Constant";
+import {
+  API_URL,
+  API_KEY,
+  IMAGE_BASE_URL,
+  POSTER_SIZE,
+  PROFILE_SIZE,
+} from "../../Constant/Constant";
 import "./TVDetailsPage.css";
 import LoadingSpinner from "../../component/Loader/Loader";
+import { useTheme } from "../../context/useThemeContext";
 
 export default function TVDetailsPage() {
   const { id } = useParams();
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const [tvDetails, setTVDetails] = useState(null);
   const [cast, setCast] = useState([]);
@@ -22,25 +36,35 @@ export default function TVDetailsPage() {
     const fetchTVDetails = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${API_URL}tv/${id}?api_key=${API_KEY}&language=en-US`);
+        const response = await fetch(
+          `${API_URL}tv/${id}?api_key=${API_KEY}&language=en-US`
+        );
         const data = await response.json();
         setTVDetails(data);
 
-        const creditsResponse = await fetch(`${API_URL}tv/${id}/credits?api_key=${API_KEY}&language=en-US`);
+        const creditsResponse = await fetch(
+          `${API_URL}tv/${id}/credits?api_key=${API_KEY}&language=en-US`
+        );
         const creditsData = await creditsResponse.json();
         setCast(creditsData.cast);
         setCrew(creditsData.crew);
 
-        const videosResponse = await fetch(`${API_URL}tv/${id}/videos?api_key=${API_KEY}&language=en-US`);
+        const videosResponse = await fetch(
+          `${API_URL}tv/${id}/videos?api_key=${API_KEY}&language=en-US`
+        );
         const videosData = await videosResponse.json();
-        const trailerData = videosData.results.find((video) => video.type === "Trailer");
+        const trailerData = videosData.results.find(
+          (video) => video.type === "Trailer"
+        );
         setTrailer(trailerData ? trailerData.key : null);
 
         // Check if the show is already in favorites or watchlist
-        const savedFavorites = JSON.parse(localStorage.getItem("favoriteTVShows")) || [];
+        const savedFavorites =
+          JSON.parse(localStorage.getItem("favoriteTVShows")) || [];
         setIsFavorite(savedFavorites.some((show) => show.id === data.id));
 
-        const savedWatchlist = JSON.parse(localStorage.getItem("watchlistTVShows")) || [];
+        const savedWatchlist =
+          JSON.parse(localStorage.getItem("watchlistTVShows")) || [];
         setIsInWatchlist(savedWatchlist.some((show) => show.id === data.id));
       } catch (error) {
         console.error("Error fetching TV details:", error);
@@ -53,9 +77,12 @@ export default function TVDetailsPage() {
   }, [id]);
 
   const handleFavoriteToggle = () => {
-    const savedFavorites = JSON.parse(localStorage.getItem("favoriteTVShows")) || [];
+    const savedFavorites =
+      JSON.parse(localStorage.getItem("favoriteTVShows")) || [];
     if (isFavorite) {
-      const updatedFavorites = savedFavorites.filter((show) => show.id !== tvDetails.id);
+      const updatedFavorites = savedFavorites.filter(
+        (show) => show.id !== tvDetails.id
+      );
       localStorage.setItem("favoriteTVShows", JSON.stringify(updatedFavorites));
       toast.error(`${tvDetails.name} removed from Favorites!`);
     } else {
@@ -67,30 +94,39 @@ export default function TVDetailsPage() {
   };
 
   const handleWatchlistToggle = () => {
-    const savedWatchlist = JSON.parse(localStorage.getItem("watchlistTVShows")) || [];
+    const savedWatchlist =
+      JSON.parse(localStorage.getItem("watchlistTVShows")) || [];
     if (isInWatchlist) {
-      const updatedWatchlist = savedWatchlist.filter((show) => show.id !== tvDetails.id);
-      localStorage.setItem("watchlistTVShows", JSON.stringify(updatedWatchlist));
+      const updatedWatchlist = savedWatchlist.filter(
+        (show) => show.id !== tvDetails.id
+      );
+      localStorage.setItem(
+        "watchlistTVShows",
+        JSON.stringify(updatedWatchlist)
+      );
       toast.error(`${tvDetails.name} removed from Watchlist!`);
     } else {
       const updatedWatchlist = [...savedWatchlist, tvDetails];
-      localStorage.setItem("watchlistTVShows", JSON.stringify(updatedWatchlist));
+      localStorage.setItem(
+        "watchlistTVShows",
+        JSON.stringify(updatedWatchlist)
+      );
       toast.success(`${tvDetails.name} added to Watchlist!`);
     }
     setIsInWatchlist(!isInWatchlist);
   };
 
-  if (loading) return <LoadingSpinner/>;
+  if (loading) return <LoadingSpinner />;
   if (!tvDetails) return <p>No TV details found.</p>;
 
   const starRating = Math.round(tvDetails.vote_average / 2);
   const director = crew.find((member) => member.job === "Director");
 
   return (
-    <div className="tv-details-page">
+    <div className={`tv-details-page ${theme}`}>
       <ToastContainer />
       <div
-        className="tv-banner"
+        className={`tv-banner ${theme}`}
         style={{
           backgroundImage: `url(${IMAGE_BASE_URL}${POSTER_SIZE}${tvDetails.backdrop_path})`,
         }}
@@ -98,14 +134,25 @@ export default function TVDetailsPage() {
         <div className="tv-info">
           <div className="tv-header">
             <h1>{tvDetails.name}</h1>
-            <div className="action-icons" style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              className="action-icons"
+              style={{ display: "flex", flexDirection: "row" }}
+            >
               <div onClick={handleFavoriteToggle}>
-                {isFavorite ? <IconHeartFilled size={24} color="#ff0000" /> : <IconHeart size={24} color="#ff6666" />}
+                {isFavorite ? (
+                  <IconHeartFilled size={24} color="#ff0000" />
+                ) : (
+                  <IconHeart size={24} color="#ff6666" />
+                )}
               </div>
               <span>{isFavorite ? "Favorite" : "Add to Favorite"}</span>
 
               <div onClick={handleWatchlistToggle}>
-                {isInWatchlist ? <IconCheck size={24} color="#76ff03" /> : <IconPlus size={24} color="#76ff03" />}
+                {isInWatchlist ? (
+                  <IconCheck size={24} color="#76ff03" />
+                ) : (
+                  <IconPlus size={24} color="#76ff03" />
+                )}
               </div>
               <span>{isInWatchlist ? "In Watchlist" : "Add to Watchlist"}</span>
             </div>
@@ -115,8 +162,12 @@ export default function TVDetailsPage() {
       </div>
       <div className="tv-details">
         <h2>TV Details</h2>
-        <p><strong>First Air Date:</strong> {tvDetails.first_air_date}</p>
-        <p><strong>IMDb Rating:</strong> {tvDetails.vote_average}/10</p>
+        <p>
+          <strong>First Air Date:</strong> {tvDetails.first_air_date}
+        </p>
+        <p>
+          <strong>IMDb Rating:</strong> {tvDetails.vote_average}/10
+        </p>
         <div className="star-rating">
           {Array(5)
             .fill()
@@ -128,8 +179,14 @@ export default function TVDetailsPage() {
               )
             )}
         </div>
-        <p><strong>Language:</strong> {tvDetails.original_language.toUpperCase()}</p>
-        {director && <p><strong>Director:</strong> {director.name}</p>}
+        <p>
+          <strong>Language:</strong> {tvDetails.original_language.toUpperCase()}
+        </p>
+        {director && (
+          <p>
+            <strong>Director:</strong> {director.name}
+          </p>
+        )}
       </div>
       {trailer && (
         <div className="trailer-section">

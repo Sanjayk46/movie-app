@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../../context/useThemeContext";
 import "./FavoritePage.css";
 
 export default function FavoriteMoviesPage() {

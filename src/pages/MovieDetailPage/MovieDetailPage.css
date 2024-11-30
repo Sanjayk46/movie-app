@@ -246,3 +246,144 @@
 .action-icons .icon:hover {
   transform: scale(1.2);
 }
+/* Light Theme */
+.movie-details-page.light {
+  background-color: #f9f9f9;
+  color:#f9f9f9;
+}
+
+.movie-details-page.light .movie-banner {
+  color: #f9f9f9;
+}
+
+/* Dark Theme */
+.movie-details-page.dark {
+  background-color: #121212;
+  color: #fff;
+}
+
+.movie-details-page.dark .movie-banner {
+  color: #fff;
+}
+
+/* General Styling */
+.movie-banner {
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: relative;
+  min-height: 400px;
+}
+
+.movie-info {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+}
+
+.movie-header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.action-icons {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.action-icons div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.movie-details {
+  padding: 20px;
+}
+
+.movie-details h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 5px;
+}
+
+.star-rating {
+  display: flex;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.trailer-section iframe {
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Cast Section */
+.cast-section {
+  padding: 20px;
+}
+
+.cast-section h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 5px;
+}
+
+.cast-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cast-card {
+  text-align: center;
+  width: 150px;
+}
+
+.cast-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.cast-card p {
+  margin: 5px 0;
+}
+
+.cast-card .character {
+  font-style: italic;
+  color: gray;
+  font-size: 0.9rem;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .movie-info {
+    max-width: 100%;
+  }
+
+  .movie-details-page {
+    padding: 10px;
+  }
+
+  .cast-container {
+    justify-content: center;
+  }
+
+  .movie-banner {
+    min-height: 300px;
+  }
+}
+
+.paracls {
+  color: #ffffff; /* Explicitly set text color to white */
+}

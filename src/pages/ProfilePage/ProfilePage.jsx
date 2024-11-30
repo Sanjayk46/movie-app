@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "./ProfilePage.css";
 import { useAuth } from "../../context/UserContext"; // Import useAuth for updateProfile
-import { useTheme } from "../../context/useThemeContext"; // Import useTheme for theme context
+import {useTheme} from "../../context/useThemeContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ProfilePage() {
-  const auth = useAuth(); // Access register function and user from AuthContext
-  const { user } = auth;
-  const { theme } = useTheme(); // Access theme from useTheme context
+  const auth = useAuth(); // Access updateProfile function from AuthContext
+  const {user} = auth;
+  const {theme} = useTheme();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,12 +29,16 @@ export default function ProfilePage() {
       return;
     }
 
-    await auth.updateProfile({ name, email, password });
+    try {
+      await auth.updateProfile({ name, email, password });
+    } catch (error) {
+      toast.error(error.response?.data || "Profile update failed. Please try again.");
+    }
   };
 
   return (
-    <div className={`profile-container ${theme}`}>
-      <div className="profile-box">
+    <div className={`login-container ${theme}`}>
+      <div className="login-box">
         <h1>Profile</h1>
         <form onSubmit={handleUpdateProfile}>
           <div className="input-group">

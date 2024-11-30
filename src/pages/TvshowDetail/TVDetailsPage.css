@@ -157,3 +157,42 @@
     }
   }
   
+  /* Light Theme */
+.tv-details-page.light {
+  color: #000000; /* Black text for better readability */
+  background-color: #ffffff; /* White background for the light theme */
+}
+
+.tv-details-page.light .tv-info {
+  background-color: rgba(255, 255, 255, 0.9); /* Light semi-transparent background */
+  color: #000000; /* Adjust text color to match the theme */
+}
+
+.tv-details-page.light .action-icons span {
+  color: #555555; /* Subtle gray for labels in the light theme */
+}
+
+.tv-details-page.light .cast-card p,
+.tv-details-page.light .cast-card .character {
+  color: white; /* Darker text for the light theme */
+}
+
+/* Dark Theme */
+.tv-details-page.dark {
+  color: #ffffff; /* White text for dark theme */
+  background-color: #141414; /* Retain the original dark background */
+}
+
+.tv-details-page.dark .tv-info {
+  background-color: rgba(0, 0, 0, 0.7); /* Original semi-transparent background */
+  color: #ffffff; /* Adjust text color for readability */
+}
+
+.tv-details-page.dark .action-icons span {
+  color: #aaaaaa; /* Original subtle gray */
+}
+
+.tv-details-page.dark .cast-card p,
+.tv-details-page.dark .cast-card .character {
+  color: #dddddd; /* Original light gray text */
+}
