@@ -39,37 +39,33 @@
 }
 
 /* Movie Details Section */
-.movie-details-table {
-  background: #1e1e1e;
+.movie-details {
   padding: 20px;
-  border-radius: 10px;
-  margin: 20px 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  text-align: left; /* Align content to the left */
 }
 
-.movie-details-table table {
-  width: 100%;
-  margin: 0 auto;
-  border-collapse: collapse;
-  color: #ddd;
+.movie-details h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 5px;
+  text-align: left; /* Ensure heading is also left-aligned */
 }
 
-.movie-details-table td,
-.movie-details-table th {
-  padding: 15px;
-  text-align: left;
-  border: 1px solid #444;
+.movie-details p {
+  margin: 10px 0;
+  line-height: 1.5;
+  text-align: left; /* Align paragraphs to the left */
 }
 
-.movie-details-table th {
-  background: #333;
-  color: #ffeb3b;
-  text-transform: uppercase;
+/* Adjust the star rating alignment */
+.star-rating {
+  display: flex;
+  gap: 5px;
+  margin: 10px 0;
+  justify-content: flex-start; /* Align stars to the left */
 }
 
-.movie-details-table td {
-  background: #1c1c1c;
-}
 
 /* Cast and Crew Sections */
 .cast-section,
@@ -249,7 +245,7 @@
 /* Light Theme */
 .movie-details-page.light {
   background-color: #f9f9f9;
-  color:#f9f9f9;
+  color: black;
 }
 
 .movie-details-page.light .movie-banner {

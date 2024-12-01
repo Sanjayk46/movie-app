@@ -72,7 +72,6 @@ export default function TVDetailsPage() {
         setLoading(false);
       }
     };
-
     fetchTVDetails();
   }, [id]);
 
@@ -118,7 +117,6 @@ export default function TVDetailsPage() {
 
   if (loading) return <LoadingSpinner />;
   if (!tvDetails) return <p>No TV details found.</p>;
-
   const starRating = Math.round(tvDetails.vote_average / 2);
   const director = crew.find((member) => member.job === "Director");
 
@@ -182,11 +180,16 @@ export default function TVDetailsPage() {
         <p>
           <strong>Language:</strong> {tvDetails.original_language.toUpperCase()}
         </p>
-        {director && (
-          <p>
-            <strong>Director:</strong> {director.name}
-          </p>
-        )}
+        <p>
+           <strong>Genres:</strong>{" "}
+          {tvDetails.genres && tvDetails.genres.map((genre) => genre.name).join(", ")}
+        </p>
+        <p>
+    <strong>Created By:</strong>{" "}
+    {tvDetails.created_by && tvDetails.created_by.length > 0
+      ? tvDetails.created_by.map((creator) => creator.name).join(", ")
+      : "No creator information available"}
+  </p>
       </div>
       {trailer && (
         <div className="trailer-section">

@@ -112,7 +112,6 @@ export default function MovieDetailsPage() {
 
   if (loading) return <LoadingSpinner />;
   if (!movieDetails) return <p>No movie details found.</p>;
-
   const starRating = Math.round(movieDetails.vote_average / 2);
   const director = crew.find((member) => member.job === "Director");
 
@@ -176,6 +175,10 @@ export default function MovieDetailsPage() {
         <p>
           <strong>Language:</strong>{" "}
           {movieDetails.original_language.toUpperCase()}
+        </p>
+        <p>
+           <strong>Genres:</strong>{" "}
+          {movieDetails.genres && movieDetails.genres.map((genre) => genre.name).join(", ")}
         </p>
         {director && (
           <p>
