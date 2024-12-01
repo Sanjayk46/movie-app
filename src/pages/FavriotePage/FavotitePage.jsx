@@ -5,74 +5,64 @@ import "./FavoritePage.css";
 
 export default function FavoriteMoviesPage() {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
-  const [favoriteTVShows,setFavoriteShows] = useState([])
+  const [favoriteTVShows, setFavoriteShows] = useState([]);
+  const { theme } = useTheme();
+
   useEffect(() => {
-    // Fetch favorites from localStorage
     const savedFavorites = JSON.parse(localStorage.getItem("favoriteMovies")) || [];
     setFavoriteMovies(savedFavorites);
-    const savedFavorite = JSON.parse(localStorage.getItem("favoriteTVShows")) || [];
-    setFavoriteShows(savedFavorite);
-  
+
+    const savedFavoriteShows = JSON.parse(localStorage.getItem("favoriteTVShows")) || [];
+    setFavoriteShows(savedFavoriteShows);
   }, []);
+
   const removeFavorite = (id) => {
     const updatedFavorites = favoriteMovies.filter((movie) => movie.id !== id);
     setFavoriteMovies(updatedFavorites);
     localStorage.setItem("favoriteMovies", JSON.stringify(updatedFavorites));
   };
-  const removeTvShow =(id)=>{
-    const updatedTvshows = favoriteTVShows.filter((tvshow) => tvshow.id !== id);
-    setFavoriteShows(updatedTvshows);
-    localStorage.setItem("favoriteTvshows", JSON.stringify(updatedTvshows));
-  }
+
+  const removeTvShow = (id) => {
+    const updatedTvShows = favoriteTVShows.filter((tvshow) => tvshow.id !== id);
+    setFavoriteShows(updatedTvShows);
+    localStorage.setItem("favoriteTVShows", JSON.stringify(updatedTvShows));
+  };
+
+  const renderFavoriteItems = (items, removeFunction, type) => (
+    <div className="favorite-movies-grid">
+      {items.map((item) => (
+        <div className="favorite-movie-card" key={item.id}>
+          <Link to={`/${type}/${item.id}`}>
+            <img
+              src={`https://image.tmdb.org/t/p/w200${item.poster_path}`}
+              alt={item.title}
+            />
+          </Link>
+          <div className="movie-details">
+            <h3>{item.title}</h3>
+            <button
+              className="remove-favorite-btn"
+              onClick={() => removeFunction(item.id)}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
-    <>
-    <div className="favorite-movies-page">
+    <div className={`favorite-movies-page ${theme}`}>
       <h2>My Favorite Movies</h2>
-      <div className="favorite-movies-grid">
-        {favoriteMovies.map((movie) => (
-          <div className="favorite-movie-card" key={movie.id}>
-            <Link to={`/movie/${movie.id}`}>
-              <img
-                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                alt={movie.title}
-              />
-            </Link>
-            <div className="movie-details">
-              <h3>{movie.title}</h3>
-              <button className="remove-favorite-btn" onClick={() => removeFavorite(movie.id)}>
-                Remove
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      {favoriteMovies.length === 0 && <p>No favorite movies yet!</p>}
-    </div>
+      {favoriteMovies.length > 0
+        ? renderFavoriteItems(favoriteMovies, removeFavorite, "movie")
+        : <p className="no-favorites">No favorite movies yet!</p>}
 
-    <div className="favorite-movies-page">
-      <h2>My Favorite TvShows</h2>
-      <div className="favorite-movies-grid">
-        {favoriteTVShows.map((tvshow) => (
-          <div className="favorite-movie-card" key={tvshow.id}>
-            <Link to={`/tv/${tvshow.id}`}>
-              <img
-                src={`https://image.tmdb.org/t/p/w200${tvshow.poster_path}`}
-                alt={tvshow.title}
-              />
-            </Link>
-            <div className="movie-details">
-              <h3>{tvshow.title}</h3>
-              <button className="remove-favorite-btn" onClick={() => removeTvShow(tvshow.id)}>
-                Remove
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      {favoriteTVShows.length === 0 && <p>No favorite movies yet!</p>}
+      <h2>My Favorite TV Shows</h2>
+      {favoriteTVShows.length > 0
+        ? renderFavoriteItems(favoriteTVShows, removeTvShow, "tv")
+        : <p className="no-favorites">No favorite TV shows yet!</p>}
     </div>
-
-    </>
   );
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./WatchList.css";
+import { useTheme } from "../../context/useThemeContext";
 
 export default function WatchlistPage() {
   const [watchlistMovies, setWatchlistMovies] = useState([]);
   const [watchlistTVShows, setWatchlistTVShows] = useState([]);
-
+  const {theme} = useTheme();
   useEffect(() => {
     // Fetch watchlist from localStorage
     const savedWatchlistMovies = JSON.parse(localStorage.getItem("watchlistMovies")) || [];
@@ -29,7 +30,7 @@ export default function WatchlistPage() {
   return (
     <>
     
-      <div className="favorite-movies-page">
+      <div className= {`favorite-movies-page ${theme}`}>
         <h2>My Movie Watchlist</h2>
         <div className="favorite-movies-grid">
           {watchlistMovies.map((movie) => (
@@ -56,7 +57,7 @@ export default function WatchlistPage() {
         {watchlistMovies.length === 0 && <p>Your movie watchlist is empty!</p>}
       </div>
 
-      <div className="favorite-movies-page">
+      <div className={`favorite-movies-page ${theme}`}>
         <h2>My TV Show Watchlist</h2>
         <div className="favorite-movies-grid">
           {watchlistTVShows.map((tvshow) => (
