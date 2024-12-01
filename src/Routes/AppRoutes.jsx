@@ -19,7 +19,6 @@ export default function AppRoutes(){
             <Route path='/login' element={<LoginPage/>}/>
             {/* <Route path='/search' element={<Search/>}/> */}
             <Route path='/register' element={<RegisterPage/>}/>
-            <Route path='/profile' element={<AuthRoute><ProfilePage/></AuthRoute>}/>
             <Route path="/movie/:id" element={<AuthRoute><MovieDetailsPage/></AuthRoute>}/>
             <Route path='/tv/:id' element={<AuthRoute><TVDetailsPage/></AuthRoute>}/>
             <Route path="/favorites" element={<AuthRoute><FavoriteMoviesPage /></AuthRoute>} />

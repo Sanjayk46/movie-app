@@ -68,7 +68,6 @@ export default function Navbar() {
               </button>
               {isDropdownOpen && (
                 <div className="dropdown-menu">
-                  <Link to="/profile">Profile</Link>
                   <Link to="/favorites">Favorites</Link>
                   <Link to="/watchlist">Watchlist</Link>
                   <Link onClick={handleLogout}>Logout</Link>
